@@ -11,28 +11,28 @@ import Home from './components/Home/Home';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
 import RegisterRBS from './components/RegisterRBS/RegisterRBS';
+import Main2 from './components/Layout/Main2';
+import Home2 from './components/Home/Home2';
+import Login2 from './components/Login/Login2';
+import Register2 from './components/Register/Register2';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Main></Main>,
+    element: <Main2></Main2>,
     children: [
       {
         path: '/',
-        element: <Home></Home>
+        element: <Home2></Home2>
       },
       {
         path: '/login',
-        element: <Login></Login>
+        element: <Login2></Login2>
       },
       {
         path: '/register',
-        element: <Register></Register>
+        element: <Register2></Register2>
       },
-      {
-        path: '/register-rbs',
-        element: <RegisterRBS></RegisterRBS>
-      }
     ]
   },
 ]);
