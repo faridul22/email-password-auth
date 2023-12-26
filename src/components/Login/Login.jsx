@@ -3,7 +3,7 @@ import React, { useRef, useState } from 'react';
 import app from '../../firebase/firebase.config';
 import { Link } from 'react-router-dom';
 
-const auth = getAuth(app)
+// const auth = getAuth(app)
 
 const Login = () => {
     const [error, setError] = useState('');
@@ -73,12 +73,12 @@ const Login = () => {
         }
         sendPasswordResetEmail(auth, email)
             .then(() => {
-               alert('Please Check your email')
+                alert('Please Check your email')
             })
             .catch((error) => {
                 const errorMessage = error.message;
                 // ..
-              });
+            });
     }
 
 

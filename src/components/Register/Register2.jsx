@@ -20,11 +20,11 @@ const Register2 = () => {
         // firebase auth
         createUserWithEmailAndPassword(auth, email, password)
             .then(result => {
-                const user = result.user;
-                console.log(user)
+                const loggedUser = result.user;
+
                 setSuccess("User successfully created")
                 setError("")
-                sendVerificationEmail(result.email)
+                sendVerificationEmail(result.user)
             })
             .catch(error => {
                 console.log(error)
@@ -33,8 +33,15 @@ const Register2 = () => {
     }
 
 
-    const sendVerificationEmail = email => {
-        sendEmailVerification()
+    const sendVerificationEmail = user => {
+        sendEmailVerification(user)
+            .then(result => {
+                setSuccess("User verification successful")
+                alert("Check your email for verification email")
+            })
+            .catch(error => {
+                setError(error.message)
+            })
     }
     return (
         <div className='container'>
