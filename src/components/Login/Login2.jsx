@@ -38,7 +38,7 @@ const Login2 = () => {
                 setError(errorMessage)
             });
     }
-    const handleResetPassword = event => {
+    const handleResetPassword = () => {
         const email = emailRef.current.value;
         if (!email) {
             alert("Please provide your email address to Reset password")
@@ -70,6 +70,7 @@ const Login2 = () => {
                                         type="email"
                                         className="form-control"
                                         id="email"
+                                        placeholder='Your Email'
                                         required
                                         ref={emailRef}
                                     />
@@ -82,6 +83,7 @@ const Login2 = () => {
                                         type="password"
                                         className="form-control"
                                         id="password"
+                                        placeholder='Your Password'
                                         required
                                     />
                                 </div>

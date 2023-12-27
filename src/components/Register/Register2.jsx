@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { createUserWithEmailAndPassword, getAuth, sendEmailVerification } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, sendEmailVerification, updateProfile } from "firebase/auth";
 import app from '../../firebase/firebase.config';
 import { Link } from 'react-router-dom';
 
@@ -7,18 +7,21 @@ const Register2 = () => {
     const [error, setError] = useState("")
     const [success, setSuccess] = useState("")
     const auth = getAuth(app)
-    const handleSubmit = (e) => {
-        e.preventDefault()
+    const handleSubmit = event => {
+        event.preventDefault()
+
         setError("")
         setSuccess("")
-        const email = e.target.email.value;
-        const password = e.target.password.value;
+        const from = event.target;
+        const email = from.email.value;
+        const password = from.password.value;
+        const name = from.name.value;
+
         console.log(email, password)
         // firebase auth
         createUserWithEmailAndPassword(auth, email, password)
             .then(result => {
-                const loggedUser = result.user;
-
+                updateProfileData(result.user, name)
                 setSuccess("User successfully created")
                 setError("")
                 sendVerificationEmail(result.user)
@@ -32,9 +35,20 @@ const Register2 = () => {
 
     const sendVerificationEmail = user => {
         sendEmailVerification(user)
-            .then(result => {
+            .then(() => {
                 setSuccess("User verification successful")
                 alert("Check your email for verification email")
+            })
+            .catch(error => {
+                setError(error.message)
+            })
+    }
+    const updateProfileData = (user, name) => {
+        updateProfile(user, {
+            displayName: name
+        })
+            .then(() => {
+
             })
             .catch(error => {
                 setError(error.message)
@@ -50,6 +64,18 @@ const Register2 = () => {
                         </div>
                         <div className="card-body">
                             <form onSubmit={handleSubmit}>
+                                <div className="mb-3">
+                                    <label htmlFor="name" className="form-label">
+                                        Full Name
+                                    </label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="name"
+                                        placeholder='Your Full Name'
+                                        required
+                                    />
+                                </div>
                                 <div className="mb-3">
                                     <label htmlFor="email" className="form-label">
                                         Email address
