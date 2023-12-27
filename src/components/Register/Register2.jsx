@@ -7,9 +7,6 @@ const Register2 = () => {
     const [error, setError] = useState("")
     const [success, setSuccess] = useState("")
     const auth = getAuth(app)
-    const handleEmailChange = (e) => {
-        console.log(e.target.value)
-    }
     const handleSubmit = (e) => {
         e.preventDefault()
         setError("")
@@ -84,6 +81,7 @@ const Register2 = () => {
                                     <small>Are you new here? Please <Link to="/login">Login</Link></small>
                                 </p>
                             </form>
+
                         </div>
                     </div>
                 </div>

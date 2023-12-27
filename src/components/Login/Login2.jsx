@@ -1,9 +1,10 @@
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import React, { useState } from 'react';
+import { getAuth, sendPasswordResetEmail, signInWithEmailAndPassword } from 'firebase/auth';
+import React, { useRef, useState } from 'react';
 import app from '../../firebase/firebase.config';
 import { Link } from 'react-router-dom';
 
 const Login2 = () => {
+    const emailRef = useRef()
     const [user, setUser] = useState(null);
     const [success, setSuccess] = useState("")
     const [error, setError] = useState("")
@@ -37,6 +38,20 @@ const Login2 = () => {
                 setError(errorMessage)
             });
     }
+    const handleResetPassword = event => {
+        const email = emailRef.current.value;
+        if (!email) {
+            alert("Please provide your email address to Reset password")
+            return
+        }
+        sendPasswordResetEmail(auth, email)
+            .then(() => {
+                alert("Please check your email")
+            })
+            .catch(error => {
+
+            })
+    }
     return (
         <div className="container">
             <div className="row justify-content-center">
@@ -56,6 +71,7 @@ const Login2 = () => {
                                         className="form-control"
                                         id="email"
                                         required
+                                        ref={emailRef}
                                     />
                                 </div>
                                 <div className="mb-3">
@@ -76,6 +92,9 @@ const Login2 = () => {
                                 </button>
                                 <p><small>Are you new here? Please <Link to="/register">Register</Link></small></p>
                             </form>
+                            <p>
+                                <small>Forget Password ? Please <Link onClick={handleResetPassword}>Reset Password</Link></small>
+                            </p>
                         </div>
                     </div>
                 </div>
